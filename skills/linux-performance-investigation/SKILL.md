@@ -1,34 +1,34 @@
 ---
 name: linux-performance-investigation
-description: 按 Brendan Gregg 的 Problem Statement、Workload、USE、TSA 和 CPU/Off-CPU 方法排查 Linux 性能退化，或在获授权的独立 Linux/Lima 环境实践 CPU 竞争、采样和恢复验证。
+description: Diagnose Linux performance regressions using Brendan Gregg's Problem Statement, Workload, USE, TSA, and CPU/Off-CPU methods, or practice CPU contention, profiling, and recovery validation in an explicitly authorized isolated Linux/Lima environment.
 ---
 
-# Linux 性能调查
+# Linux performance investigation
 
-目标是建立用户症状到资源压力或执行/等待路径的可验证证据链，而不是堆叠工具输出。方法来自 Brendan Gregg；阶段组合、实验与记录格式是本项目的工程化整理，不是作者认证流程。
+Build a verifiable evidence chain from user-visible symptoms to resource pressure or execution/waiting paths, rather than collecting tool output without a question. The methods come from Brendan Gregg; the combined stages, experiments, and recording format are this project's engineering synthesis, not an author-certified procedure.
 
-## 选择模式
+## Select the mode
 
-- 真实问题：先读 [调查流程](references/workflow.md)，用 [记录模板](assets/investigation-template.md) 留下证据；诊断请求只做诊断。
-- 教学或 Lima 实践：先读 [实验说明](references/cpu-saturation-lab.md)，仅在明确授权的隔离环境运行脚本。真实服务排障不自动运行竞争负载。
-- 核对作者方法：读 [官方来源](references/sources.md)。书籍目录和公开章节不是随意再分发书籍的授权。
+- Real incident: read the [investigation workflow](references/workflow.md) and use the [record template](assets/investigation-template.md). A diagnostic request authorizes diagnosis, not implementation.
+- Teaching or Lima practice: read the [lab guide](references/cpu-saturation-lab.md) first. Run scripts only in an explicitly authorized isolated environment. Do not inject competing workloads as an automatic step in diagnosing a real service.
+- Method attribution: read the [official sources](references/sources.md). Public tables of contents or sample chapters do not authorize unrestricted redistribution of books.
 
-## 决策要求
+## Decision requirements
 
-先明确基线、退化指标、时间窗、影响范围及最近变化。初筛记录采样间隔与测量口径，不能从 load、CPU 高或单个错误直接宣布根因。
+Establish the baseline, regression metric, time window, affected scope, and recent changes. Record sampling intervals and measurement conventions during triage. Load average, high CPU usage, or a single error does not establish a root cause.
 
-按证据选择 Workload / USE / TSA：
-执行时间主导则采 CPU 栈；runnable 主导则看排队、绑核、配额与祖先 cgroup；
-sleeping/lock 主导则调查阻塞与唤醒路径。CPU 不高不等于没有瓶颈，off-CPU 累计时间也不直接等于请求延迟。
+Choose Workload / USE / TSA views according to the evidence:
+when execution dominates, sample CPU stacks; when runnable time dominates, investigate scheduling queues, CPU affinity, quotas, and ancestor cgroups;
+when sleeping or lock time dominates, investigate blocking and wakeup paths. Low CPU usage does not rule out a bottleneck, and aggregate off-CPU time is not directly equivalent to request latency.
 
-使用 perf/BPF 前确认工具、内核、权限、目标过滤、事件支持、时长及开销；缺工具或事件受限时记录限制，不自动安装、改 sysctl 或扩大目标。
-符号缺失必须报告为未解析路径；独立补充实验不冒充原现场证据。
+Before perf/BPF tracing, verify tools, kernel, permissions, target filters, event support, duration, and overhead. Record missing tools or unsupported events instead of automatically installing packages, changing sysctl settings, or widening the target.
+Report missing symbols as unresolved paths. Do not present an independent supplementary experiment as evidence captured from the original incident.
 
-每轮写“假设 → 可证伪预测 → 观测/干预 → 结果”。仅在请求包含修复或实验授权时进行可回退干预。业务结果和被怀疑的等待/压力应在相同工作负载下同步改善，并检查错误和邻近负载回归。
+For each iteration, write “hypothesis → falsifiable prediction → observation/intervention → result.” Perform reversible interventions only when the request authorizes a fix or experiment. User-visible results and the suspected waiting/resource pressure should improve together under the same workload; check errors and regressions in neighboring workloads.
 
-## 交付与数据边界
+## Delivery and data boundaries
 
-报告先给结论状态：根因已证实 / 缓解但未证实 / 已排除 / 证据不足。
-随后给前后指标、关键证据、已排除和未覆盖项、回滚/清理结果。
+Lead with the conclusion status: root cause confirmed / mitigated but unconfirmed / hypothesis ruled out / insufficient evidence.
+Then give before-and-after metrics, key evidence, ruled-out hypotheses, coverage gaps, and rollback/cleanup results.
 
-原始日志、perf 数据、调用栈和请求标识留在本地非发布目录；共享副本移除账号/邮箱、主机、IP/MAC、内部域名、路径、租户/请求标识、精确时间和不必要的地址。保留版本、采样口径与测量值；需要关联时使用一致的非可逆占位符。自动扫描不能代替人工审查，也不自动授权发布。
+Keep raw logs, perf data, call stacks, and request identifiers in a local non-publication directory. Remove accounts/email addresses, hosts, IP/MAC addresses, internal domains, paths, tenant/request identifiers, exact timestamps, and unnecessary addresses from shared copies. Preserve versions, measurement conventions, and measured values; use consistent, non-reversible placeholders when correlation is needed. Automated scanning does not replace manual review or authorize publication.

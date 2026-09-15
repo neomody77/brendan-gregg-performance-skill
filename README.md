@@ -1,28 +1,28 @@
 # Brendan Gregg Linux Performance Investigation Skill
 
-把 Brendan Gregg 的公开性能方法论转化为可执行的 Codex skill：问题陈述 → 初筛 → Workload / USE / TSA → CPU 或等待路径 → 假设验证 → 复测。
+An executable Codex skill built around Brendan Gregg's public performance methodologies: problem statement → initial triage → Workload / USE / TSA → execution or waiting paths → hypothesis testing → recovery validation.
 
-这是独立整理，不是作者官方项目，也不包含或提供书籍全文、PDF、第三方笔记镜像。方法来源见 [官方来源](skills/linux-performance-investigation/references/sources.md)。
+This is an independent synthesis, not an official project by the author. It does not include or distribute full books, PDFs, or mirrored third-party reading notes. See the [official sources](skills/linux-performance-investigation/references/sources.md).
 
-## 安装与调用
+## Installation and invocation
 
-将 `skills/linux-performance-investigation` 整个目录复制到 `~/.codex/skills/`，或项目的 `.agents/skills/`。重新加载后调用：
+Copy the entire `skills/linux-performance-investigation` directory into `~/.codex/skills/` or your project's `.agents/skills/`. Reload skill discovery, then invoke it:
 
 ```text
-使用 $linux-performance-investigation 排查这个 Linux 服务延迟升高的问题，先只读诊断。
-使用 $linux-performance-investigation 在独立 Lima Linux 实例复现 CPU 竞争并验证恢复。
+Use $linux-performance-investigation to diagnose increased latency in this Linux service. Start with read-only checks.
+Use $linux-performance-investigation to reproduce CPU contention in an isolated Lima Linux instance and verify recovery.
 ```
 
-skill 在 [SKILL.md](skills/linux-performance-investigation/SKILL.md)。依赖按模式选择，不自动安装软件、不降低系统安全限制。
+The entrypoint is [SKILL.md](skills/linux-performance-investigation/SKILL.md). Dependencies depend on the selected mode; the skill does not automatically install software or weaken system security settings.
 
-## 已实践的教学案例
+## Tested teaching example
 
-4 vCPU Linux VM：1 GiB 流式哈希耗时 5.24 → 12.39 → 5.24 秒；三轮 512 MiB 中位数 3.03 → 5.90 → 3.03 秒。记录的是一次受控实验，不是硬件排名，也不保证在其他环境得到相同数字。
+On a 4-vCPU Linux VM, a 1-GiB streaming hash took 5.24 → 12.39 → 5.24 seconds. The medians of three 512-MiB trials were 3.03 → 5.90 → 3.03 seconds. These are results from a controlled experiment, not a hardware ranking or a promise of identical numbers elsewhere.
 
-见 [脱敏案例与复现](skills/linux-performance-investigation/references/cpu-saturation-lab.md)。
+See the [sanitized case study and reproduction guide](skills/linux-performance-investigation/references/cpu-saturation-lab.md).
 
-## 发布边界
+## Publication boundaries
 
-只发布原创指导、模板、脚本和去标识化的实验摘要。未包含本机路径、主机或实例名、个人邮箱、精确测试时间、原始 PID、内存地址、网络标识、原始日志或采样二进制。
+The repository contains only original guidance, templates, scripts, and a de-identified experiment summary. It excludes local machine paths, actual host or instance names, personal email addresses, exact test timestamps, original PIDs, memory addresses, network identifiers, raw logs, and binary profiling data.
 
-脚本运行产生的输出不是自动脱敏的；排障记录应先本地保留，另行审查后再共享。仓库忽略规则不是安全扫描的替代品。
+Runtime output is not automatically sanitized. Keep investigation records local and review a separate copy before sharing. Ignore rules are not a substitute for security scanning.

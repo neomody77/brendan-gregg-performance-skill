@@ -1,10 +1,10 @@
-# 发布隐私检查
+# Publication privacy review
 
-发布集合限定为本仓库内原创 Markdown、YAML 和 Bash 文本。不包含原资料库的 PDF、压缩包、CSV、原始日志、采样二进制或个人配置。
+The publication set is limited to this repository's original Markdown, YAML, and Bash text. It excludes PDFs, archives, CSV files, raw logs, binary profiling data, and personal configuration from the original research collection.
 
-人工检查删除/未引入：个人账号和邮箱、本机路径、具体主机/实例名、实际 PID/UID、网络地址、内部域名、精确测试时间及栈地址。
-GitHub 仓库拥有者由发布目标指定，是唯一有意公开的账号关联；正文不收录个人履历或设备标识。
-Git 提交使用通用项目身份，避免继承机器全局配置中的个人邮箱。
+Manual review removed or avoided introducing personal accounts and email addresses, local machine paths, actual host or instance names, observed PIDs/UIDs, network addresses, internal domains, exact test timestamps, and stack addresses.
+The GitHub owner specified in the publication target is the only intentionally public account association; the content does not include personal biography or device identifiers.
+Git commits use a generic project identity rather than inheriting a personal email address from the machine's global configuration.
 
-运行输出不会自动脱敏；脚本的通用 /proc、/sys、/tmp 路径及 PID 变量不是现场标识。
-教学摘要保留技术版本和测量值，不包含原始事件上下文。忽略规则只防误加文件，不替代人工审查、秘密扫描和外发确认。
+Runtime output is not automatically sanitized. Generic /proc, /sys, and /tmp paths and PID variables in scripts are not observed environment identifiers.
+The teaching summary preserves technical versions and measurements without raw event context. Ignore rules only reduce accidental additions; they do not replace manual review, secret scanning, or confirmation before publication.

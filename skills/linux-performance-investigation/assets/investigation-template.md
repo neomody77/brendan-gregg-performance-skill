@@ -1,40 +1,40 @@
-# 性能调查记录
+# Performance investigation record
 
-## 问题
+## Problem
 
-症状 / 基线 → 当前值：
-时间窗 / 影响范围：
-环境版本 / 配额 / 最近变化：
-工作负载 Who / Why / What / How：
+Symptoms / baseline → current value:
+Time window / affected scope:
+Environment versions / quotas / recent changes:
+Workload Who / Why / What / How:
 
-## 证据
+## Evidence
 
-| 问题/资源/状态 | 时间窗与命令 | 观测与口径 | 本地证据位置 | 解释/未知 |
+| Question/resource/state | Time window and command | Observation and measurement convention | Local evidence location | Interpretation/unknowns |
 |---|---|---|---|---|
-| CPU / runnable / 配额 | | | | |
-| 内存 / paging | | | | |
-| 存储 I/O / 容量 | | | | |
-| 网络 | | | | |
-| 软件资源 / lock / sleeping | | | | |
-| CPU / off-CPU / 延迟拆分 | | | | |
+| CPU / runnable / quotas | | | | |
+| Memory / paging | | | | |
+| Storage I/O / capacity | | | | |
+| Network | | | | |
+| Software resources / lock / sleeping | | | | |
+| CPU / off-CPU / latency breakdown | | | | |
 
-不适用记 N/A，没有测量记 ?。检查祖先 cgroup，单列缺符号、丢样和未覆盖项。
+Use N/A for inapplicable items and ? for unmeasured items. Check ancestor cgroups; explicitly list missing symbols, lost samples, and coverage gaps.
 
-## 假设与验证
+## Hypotheses and validation
 
-| 假设 | 可证伪预测 | 观测或授权干预 | 结果 | 保留/排除 |
+| Hypothesis | Falsifiable prediction | Observation or authorized intervention | Result | Retain/rule out |
 |---|---|---|---|---|
 | | | | | |
 
-变更 / 理由 / 回退：
-相同工作负载前后业务指标：
-资源/等待前后指标：
-重复次数 / 错误率 / 尾延迟 / 邻近服务：
-本轮 PID、临时文件、VM 状态恢复结果：
+Change / rationale / rollback:
+User-visible metrics before and after, under the same workload:
+Resource/waiting metrics before and after:
+Repetitions / error rate / tail latency / neighboring services:
+Cleanup of this run's PIDs and temporary files / restoration of initial VM state:
 
-## 结论
+## Conclusion
 
-状态：根因已证实 / 缓解但未证实 / 已排除 / 证据不足。
-关键证据：
-仍未知 / 后续触发条件：
-共享副本脱敏检查：账号、邮箱、网络、主机、路径、请求标识、时间、地址。
+Status: root cause confirmed / mitigated but unconfirmed / hypothesis ruled out / insufficient evidence.
+Key evidence:
+Remaining unknowns / triggers for further investigation:
+Shared-copy sanitization check: accounts, email addresses, network identifiers, hosts, paths, request identifiers, timestamps, addresses.
