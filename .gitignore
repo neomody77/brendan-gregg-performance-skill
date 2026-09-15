@@ -1,0 +1,12 @@
+.DS_Store
+.env
+.env.*
+*.key
+*.pem
+*.pdf
+*.tar.gz
+perf.data*
+*.log
+raw/
+private/
+reports/

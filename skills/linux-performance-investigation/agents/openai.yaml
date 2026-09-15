@@ -1,0 +1,4 @@
+interface:
+  display_name: "Linux Performance Investigation"
+  short_description: "Evidence-led Linux performance diagnosis with USE and TSA"
+  default_prompt: "使用 $linux-performance-investigation 对 Linux 性能退化建立证据链，先做只读诊断并说明未覆盖项。"
